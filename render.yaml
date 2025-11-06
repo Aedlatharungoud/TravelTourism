@@ -1,7 +1,6 @@
 services:
   - type: web
     name: traveltourism
-    env: php
-    buildCommand: ""
-    startCommand: "php -S 0.0.0.0:$PORT -t ."
+    env: docker
     plan: free
+    dockerfilePath: ./Dockerfile
