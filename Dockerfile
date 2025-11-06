@@ -1,11 +1,14 @@
-# Use official PHP image with Apache
+# Use PHP with Apache preinstalled
 FROM php:8.2-apache
 
-# Copy your project files into the Apache directory
+# Enable common PHP extensions (important for MySQL)
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+# Copy project files to Apache root
 COPY . /var/www/html/
 
-# Expose the port Render uses
+# Expose the Render port (Render expects your app to listen on $PORT)
 EXPOSE 10000
 
-# Run PHP's built-in web server
-CMD ["php", "-S", "0.0.0.0:10000", "-t", "/var/www/html"]
+# Start Apache on Render's dynamic port
+CMD ["bash", "-c", "apache2-foreground"]
